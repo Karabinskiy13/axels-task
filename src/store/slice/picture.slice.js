@@ -4,9 +4,9 @@ import { pictureService } from '../../services/picture.service';
 
 export const getPictureByQuery = createAsyncThunk(
   'pictureSlice/getPictureByQuery',
-  async (_, { rejectedWithValue }) => {
+  async ({ q, page }, { rejectedWithValue }) => {
     try {
-      return await pictureService.getImagesByQuery();
+      return await pictureService.getImagesByQuery(q, page);
     } catch (e) {
       rejectedWithValue(e.message);
     }
@@ -29,7 +29,6 @@ const pictureSlice = createSlice({
     [getPictureByQuery.fulfilled]: (state, action) => {
       state.status = 'fulfilled';
       state.images = action.payload.hits;
-      console.log(action.payload);
     },
     [getPictureByQuery.rejected]: (state, action) => {
       state.status = 'error';
