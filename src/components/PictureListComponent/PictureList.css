@@ -1,0 +1,29 @@
+.form{
+    max-width: 100%;
+
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.form__header{
+    background-color: black;
+    color: white;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+}
+.form__button{
+    max-width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pictures{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}

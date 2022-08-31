@@ -1,44 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPictureByQuery } from '../../store/slice/picture.slice';
+import SinglePicture from '../SinglePictureComponent/SinglePicture';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SinglePicture from '../SinglePictureComponent/SinglePicture';
+
+import './PictureList.css';
 
 const PictureList = () => {
   //   const [key, setKey] = useState('');
-  //   const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { images } = useSelector((state) => state.pictureReducer);
-  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    dispatch(getPictureByQuery({ q: `${searchQuery}`, page: 1 }));
-  }, [dispatch]);
+  const onSubmit = ({ searchValue }) => {
+    dispatch(getPictureByQuery({ q: `${searchValue}`, page: 1 }));
+  };
   console.log(images);
-  const searchValue = images.filter((image) => {
-    return image.tags.toLowerCase().includes(searchQuery.toLowerCase());
-  });
   return (
     <div>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)} className="form">
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Picture Application</Form.Label>
+          <Form.Label className="form__header">Picture Application</Form.Label>
           <Form.Control
+            className="form__input"
             type="text"
-            onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search with keywords"
+            placeholder="Search by keywords"
+            required
+            {...register('searchValue')}
           />
-          <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="dark" type="submit" className="form__button">
           Submit
         </Button>
       </Form>
-      <div>
-        {searchValue &&
-          searchValue.map((picture) => <SinglePicture key={picture.id} picture={picture} />)}
+      <div className="pictures">
+        {images && images.map((picture) => <SinglePicture key={picture.id} picture={picture} />)}
       </div>
     </div>
   );

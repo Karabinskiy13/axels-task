@@ -1,0 +1,8 @@
+.picture{
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+.picture__image{
+    max-height: 150px;
+}
