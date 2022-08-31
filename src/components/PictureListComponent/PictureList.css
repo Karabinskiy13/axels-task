@@ -21,6 +21,15 @@
     align-items: center;
     justify-content: center;
 }
+.form__tags{
+    border: 3px solid gray;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    max-width: 400px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
 
 .pictures{
     display: flex;

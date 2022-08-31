@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPictureByQuery } from '../../store/slice/picture.slice';
+import { getPictureByQuery, setTags } from '../../store/slice/picture.slice';
 import SinglePicture from '../SinglePictureComponent/SinglePicture';
 
 import Button from 'react-bootstrap/Button';
@@ -9,22 +9,15 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './PictureList.css';
-import { useParams } from 'react-router-dom';
 
 const PictureList = () => {
-  const { tags } = useParams();
-  console.log(tags);
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-  const { images } = useSelector((state) => state.pictureReducer);
-  const [searchQuery, setSearchQuery] = useState('');
-  const lastTags = [];
+  const { images, lastTags } = useSelector((state) => state.pictureReducer);
   const onSubmit = ({ searchValue }, e) => {
     e.preventDefault();
     dispatch(getPictureByQuery({ q: `${searchValue}`, page: 1 }));
-    setSearchQuery({ ...searchQuery, searchValue });
-    lastTags.push(searchQuery.searchValue);
-    console.log(lastTags);
+    dispatch(setTags(searchValue));
   };
 
   return (
@@ -45,6 +38,11 @@ const PictureList = () => {
           Submit
         </Button>
       </Form>
+      <div className="form__tags">
+        {lastTags.map((tag, index) => (
+          <p key={index}>{tag},</p>
+        ))}
+      </div>
       <div className="pictures">
         {images && images.map((picture) => <SinglePicture key={picture.id} picture={picture} />)}
       </div>

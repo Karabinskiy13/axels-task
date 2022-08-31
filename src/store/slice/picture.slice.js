@@ -21,7 +21,14 @@ const pictureSlice = createSlice({
     status: null,
     error: null
   },
-  reducers: {},
+  reducers: {
+    setTags(state, action) {
+      if (state.lastTags.length === 3) {
+        state.lastTags.splice(-1);
+      }
+      state.lastTags.unshift(action.payload);
+    }
+  },
   extraReducers: {
     [getPictureByQuery.pending]: (state) => {
       state.status = 'pending...';
@@ -37,6 +44,6 @@ const pictureSlice = createSlice({
     }
   }
 });
-
+export const { setTags } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;
