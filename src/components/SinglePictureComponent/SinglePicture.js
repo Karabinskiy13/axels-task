@@ -10,7 +10,7 @@ const SinglePicture = ({ picture }) => {
   const { previewURL, tags } = picture;
   return (
     <div>
-      <Card className="picture" border="primary" style={{ width: '18rem' }}>
+      <Card className="picture" border="dark" style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Img className="picture__image" src={previewURL}></Card.Img>
           <Card.Header className="picture__title">{tags}</Card.Header>

@@ -17,6 +17,7 @@ const pictureSlice = createSlice({
   name: 'pictureSlice',
   initialState: {
     images: [],
+    lastTags: [],
     status: null,
     error: null
   },
