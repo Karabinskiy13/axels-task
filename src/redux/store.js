@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import pictureReducer from './slice/picture.slice';
+import pictureReducer from '../redux/ducks/pictures';
 
 const rootReducer = combineReducers({ pictureReducer });
 

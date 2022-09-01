@@ -44,6 +44,7 @@ const pictureSlice = createSlice({
     }
   }
 });
+
 export const { setTags } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;

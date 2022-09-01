@@ -1,14 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPictureByQuery, setTags } from '../../store/slice/picture.slice';
-import SinglePicture from '../SinglePictureComponent/SinglePicture';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './PictureList.css';
+import { getPictureByQuery, setTags } from '../../redux/ducks/pictures';
+import SinglePicture from '../SinglePictureComponent/SinglePicture';
+import { Forma, Header, Tags } from '../../styled/PictureList';
 
 const PictureList = () => {
   const { register, handleSubmit } = useForm();
@@ -22,30 +24,35 @@ const PictureList = () => {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit(onSubmit)} className="form">
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label className="form__header">Picture Application</Form.Label>
-          <Form.Control
-            className="form__input"
-            type="text"
-            placeholder="Search by keywords"
-            required
-            {...register('searchValue')}
-          />
-        </Form.Group>
-        {/* <div>{searchQuery.searchValue}</div> */}
-        <Button variant="dark" type="submit" className="form__button">
-          Submit
-        </Button>
-      </Form>
-      <div className="form__tags">
+      <Forma>
+        <Form onSubmit={handleSubmit(onSubmit)} className="form">
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Header>
+              <Form.Label className="form__header">Picture Application</Form.Label>
+            </Header>
+            <Form.Control
+              className="form__input"
+              type="text"
+              placeholder="Search by keywords"
+              required
+              {...register('searchValue')}
+            />
+          </Form.Group>
+          <Button variant="dark" type="submit" className="form__button">
+            Submit
+          </Button>
+        </Form>
+      </Forma>
+      <Tags>
         {lastTags.map((tag, index) => (
           <p key={index}>{tag},</p>
         ))}
-      </div>
-      <div className="pictures">
-        {images && images.map((picture) => <SinglePicture key={picture.id} picture={picture} />)}
-      </div>
+      </Tags>
+      <Container fluid>
+        <Row>
+          {images && images.map((picture) => <SinglePicture key={picture.id} picture={picture} />)}
+        </Row>
+      </Container>
     </div>
   );
 };
