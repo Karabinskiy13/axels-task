@@ -27,6 +27,9 @@ const pictureSlice = createSlice({
         state.lastTags.splice(-1);
       }
       state.lastTags.unshift(action.payload);
+    },
+    deleteTags(state, action) {
+      state.lastTags = state.lastTags.filter((tag, index) => index !== action.payload);
     }
   },
   extraReducers: {
@@ -45,6 +48,6 @@ const pictureSlice = createSlice({
   }
 });
 
-export const { setTags } = pictureSlice.actions;
+export const { setTags, deleteTags } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;

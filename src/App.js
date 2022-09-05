@@ -1,16 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import PictureList from './components/PictureListComponent/PictureList';
+import { GlobalStyle } from './styled/Global';
+import PictureList from './components/PictureList';
+import ModalView from './components/ModalView';
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path={'/'} element={<PictureList />}>
-          <Route path={':lastTags'} element={<PictureList />} />
-        </Route>
-      </Routes>
+      <ModalView />
+      <PictureList />
     </div>
   );
 }
