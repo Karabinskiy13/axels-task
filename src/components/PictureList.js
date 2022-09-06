@@ -32,9 +32,14 @@ const PictureList = () => {
   };
   const handleDelete = (index) => {
     dispatch(deleteTags(index));
+    if (lastTags[index + 1] !== undefined) {
+      dispatch(getPictureByQuery({ q: lastTags[index + 1].id, page: 1 }));
+    } else {
+      dispatch(getPictureByQuery({ q: '/', page: 1 }));
+      console.log(lastTags[index + 1]);
+    }
   };
   const handleTagClick = (index) => {
-    console.log(index);
     dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
   };
   return (
