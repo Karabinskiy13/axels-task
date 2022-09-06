@@ -47,7 +47,8 @@ export const Tags = styled.div`
     font-size: 18px;
     display: inline-block;
     padding: 5px;
-    margin: 0 5px;
+    margin-top: 10px;
+    margin-right: 5px;
     border-radius: 5px;
     cursor: pointer;
   }

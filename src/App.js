@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+
+import { PictureList, ModalView } from './components';
 import { GlobalStyle } from './styled/Global';
-import PictureList from './components/PictureList';
-import ModalView from './components/ModalView';
 
 function App() {
   return (

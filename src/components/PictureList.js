@@ -11,9 +11,9 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { deleteTags, getPictureByQuery, setTags } from '../redux/ducks/pictures';
-import SinglePicture from '../components/SinglePicture';
-import { Header, Tags } from '../styled/PictureList';
+import SinglePicture from './SinglePicture';
 import ModalView from './ModalView';
+import { Header, Tags } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();
