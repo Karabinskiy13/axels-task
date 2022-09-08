@@ -22,14 +22,20 @@ const pictureSlice = createSlice({
     error: null
   },
   reducers: {
-    setTags(state, action) {
+    setTag(state, action) {
       if (state.lastTags.length === 3) {
         state.lastTags.splice(-1);
       }
       state.lastTags.unshift(action.payload);
     },
-    deleteTags(state, action) {
+    deleteTag(state, action) {
       state.lastTags = state.lastTags.filter((tag, index) => index !== action.payload);
+    },
+    setInitialTags(state, action) {
+      state.lastTags = action.payload;
+    },
+    resetImages(state) {
+      state.images = [];
     }
   },
   extraReducers: {
@@ -48,6 +54,6 @@ const pictureSlice = createSlice({
   }
 });
 
-export const { setTags, deleteTags } = pictureSlice.actions;
+export const { setTag, deleteTag, setInitialTags, resetImages } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;

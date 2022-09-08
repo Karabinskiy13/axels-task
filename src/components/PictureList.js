@@ -1,49 +1,91 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { WithContext as ReactTags } from 'react-tag-input';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import Form from 'react-bootstrap/Form';
-import { Container, Row, Col } from 'react-bootstrap';
+import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { deleteTags, getPictureByQuery, setTags } from '../redux/ducks/pictures';
+import {
+  deleteTag,
+  getPictureByQuery,
+  setTag,
+  resetImages,
+  setInitialTags
+} from '../redux/ducks/pictures';
 import SinglePicture from './SinglePicture';
 import ModalView from './ModalView';
 import { Header, Tags } from '../styled/PictureList';
-import { Outlet } from 'react-router-dom';
 
 const PictureList = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { images, lastTags } = useSelector((state) => state.pictureReducer);
+
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
+  const [activeTag, setActiveTag] = useState('');
   const openModal = (url) => {
     setModalStatus(true);
     setModalImageUrl(url);
   };
 
+  const [query, setQuery] = useQueryParams({
+    tags: ArrayParam,
+    activeTag: StringParam,
+    previewURL: StringParam
+  });
+  useEffect(() => {
+    setQuery({
+      tags: lastTags.map((t) => t.id),
+      activeTag: activeTag || undefined,
+      previewURL: modalImageUrl || undefined
+    });
+  }, [lastTags, activeTag, modalImageUrl]);
+
+  useEffect(() => {
+    if (lastTags.length === 0) dispatch(resetImages());
+  }, [lastTags]);
+
+  useEffect(() => {
+    if (query.tags) {
+      dispatch(
+        setInitialTags(
+          query.tags.map((t) => {
+            return { id: t, text: t };
+          })
+        )
+      );
+
+      if (!query.activeTag) {
+        dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }));
+      } else {
+        setActiveTag(query.activeTag);
+        dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
+      }
+    }
+
+    if (query.previewURL) {
+      openModal(query.previewURL);
+    }
+  }, []);
+
   const handleAddition = (tag) => {
-    dispatch(setTags(tag));
+    dispatch(setTag(tag));
     dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
-    navigate(`${tag.id}`);
   };
   const handleDelete = (index) => {
-    dispatch(deleteTags(index));
-    if (lastTags[index + 1] !== undefined) {
-      dispatch(getPictureByQuery({ q: lastTags[index + 1].id, page: 1 }));
-      navigate(`${lastTags[index + 1].id}`);
-    } else {
-      dispatch(getPictureByQuery({ q: '/', page: 1 }));
-      navigate('/');
-    }
+    dispatch(deleteTag(index));
+    dispatch(
+      getPictureByQuery({
+        q: lastTags[index + 1] ? lastTags[index + 1].id : lastTags[index - 1].id,
+        page: 1
+      })
+    );
   };
   const handleTagClick = (index) => {
     dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
-    navigate(`${lastTags[index].id}`);
+    setActiveTag(lastTags[index].id);
   };
   return (
     <div>
@@ -64,7 +106,7 @@ const PictureList = () => {
         <Row>
           {images &&
             images.map((picture) => (
-              <Col sm={12} md={4} xl={3} key={picture.id}>
+              <Col sm={6} md={4} xl={2} key={picture.id}>
                 <SinglePicture
                   picture={picture}
                   showModal={() => openModal(picture.largeImageURL)}
@@ -73,7 +115,6 @@ const PictureList = () => {
             ))}
         </Row>
       </Container>
-      <Outlet />
       <ModalView
         show={modalStatus}
         url={modalImageUrl}

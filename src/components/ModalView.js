@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Modal from 'react-bootstrap/Modal';
-import Image from 'react-bootstrap/Image';
+import { Modal, Image } from 'react-bootstrap';
 
 const ModalView = ({ show, url, hideModal }) => {
   return (
