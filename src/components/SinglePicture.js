@@ -3,21 +3,26 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Picture, Columns } from '../styled/SinglePicture';
+import { Columns } from '../styled/SinglePicture';
 
 const SinglePicture = ({ picture, showModal }) => {
   const { previewURL, tags } = picture;
   return (
-    <Columns onClick={() => showModal()}>
-      <Picture className="picture" border="dark" style={{ width: '18rem' }}>
-        <Card.Body style={{ minHeight: '250px' }}>
+    <Columns>
+      <Card
+        className="picture"
+        onClick={() => showModal()}
+        border="dark"
+        style={{ cursor: 'pointer' }}>
+        <Card.Body style={{ textAlign: 'center' }}>
           <Card.Img
-            style={{ maxHeight: '150px', minHeight: '160px' }}
+            style={{ minHeight: '220px', maxWidth: '350px', height: '100%', width: 'auto' }}
             className="picture__image"
-            src={previewURL}></Card.Img>
+            src={previewURL}
+          />
           <Card.Header className="picture__title">{tags}</Card.Header>
         </Card.Body>
-      </Picture>
+      </Card>
     </Columns>
   );
 };
