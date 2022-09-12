@@ -5,7 +5,7 @@ import { QueryParamProvider } from 'use-query-params';
 
 import { PictureList } from './components';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <QueryParamProvider adapter={ReactRouter6Adapter}>
@@ -15,6 +15,6 @@ function App() {
       </QueryParamProvider>
     </div>
   );
-}
+};
 
 export default App;
