@@ -14,8 +14,8 @@ import {
   resetImages,
   setInitialTags
 } from '../redux/ducks/pictures';
-import SinglePicture from './SinglePicture';
-import ModalView from './ModalView';
+import { ModalView, SinglePicture } from './index';
+
 import { Header, Tags } from '../styled/PictureList';
 
 const PictureList = () => {
@@ -45,7 +45,7 @@ const PictureList = () => {
   }, [lastTags, activeTag, modalImageUrl]);
 
   useEffect(() => {
-    if (lastTags.length === 0) dispatch(resetImages());
+    lastTags.length === 0 ? dispatch(resetImages()) : false;
   }, [lastTags]);
 
   useEffect(() => {
@@ -57,17 +57,12 @@ const PictureList = () => {
           })
         )
       );
-
-      if (!query.activeTag) {
-        dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }));
-      } else {
-        setActiveTag(query.activeTag);
+      !query.activeTag
+        ? dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }))
+        : setActiveTag(query.activeTag),
         dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
-      }
-    }
 
-    if (query.previewURL) {
-      openModal(query.previewURL);
+      query.previewURL ? openModal(query.previewURL) : false;
     }
   }, []);
 
