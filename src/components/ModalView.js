@@ -15,7 +15,7 @@ const ModalView = ({ show, url, hideModal }) => {
         <Modal.Title id="contained-modal-title-vcenter">Image Preview</Modal.Title>
         <br />
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Image src={url} fluid></Image>
       </Modal.Body>
     </Modal>
