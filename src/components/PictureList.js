@@ -35,6 +35,7 @@ const PictureList = () => {
     activeTag: StringParam,
     previewURL: StringParam
   });
+
   useEffect(() => {
     setQuery({
       tags: lastTags.map((t) => t.id),
