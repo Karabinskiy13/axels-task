@@ -25,7 +25,7 @@ const PictureList = () => {
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
-  const openModal = (url) => {
+  const openModal = (url: React.SetStateAction<string>) => {
     setModalStatus(true);
     setModalImageUrl(url);
   };
@@ -38,7 +38,7 @@ const PictureList = () => {
 
   useEffect(() => {
     setQuery({
-      tags: lastTags.map((t) => t.id),
+      tags: lastTags.map((t: { id: number; }) => t.id),
       activeTag: activeTag || undefined,
       previewURL: modalImageUrl || undefined
     });
@@ -66,11 +66,11 @@ const PictureList = () => {
     }
   }, []);
 
-  const handleAddition = (tag) => {
+  const handleAddition = (tag: { id: number; }) => {
     dispatch(setTag(tag));
     dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
   };
-  const handleDelete = (index) => {
+  const handleDelete = (index: number) => {
     dispatch(deleteTag(index));
     dispatch(
       getPictureByQuery({
@@ -79,7 +79,7 @@ const PictureList = () => {
       })
     );
   };
-  const handleTagClick = (index) => {
+  const handleTagClick = (index: number) => {
     dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
     setActiveTag(lastTags[index].id);
   };
@@ -101,7 +101,7 @@ const PictureList = () => {
       <Container fluid>
         <Row>
           {images &&
-            images.map((picture) => (
+            images.map((picture: { id: React.Key | null | undefined; largeImageURL: any; }) => (
               <Col sm={6} md={4} xl={2} key={picture.id}>
                 <SinglePicture
                   picture={picture}

@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import pictureReducer from '../redux/ducks/pictures';
+import pictureReducer from './ducks/pictures';
 
 const rootReducer = combineReducers({ pictureReducer });
 
@@ -9,3 +9,6 @@ const store = configureStore({
 });
 
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
