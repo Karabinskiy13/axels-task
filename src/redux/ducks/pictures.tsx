@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { buildQueries } from '@testing-library/react';
 import { IImage } from '../../interfaces/Image';
 
 
 import { pictureService } from '../../services/picture.service';
 
-type Images = {
+type ImagesType = {
+  largeImageURL: string
   id:number
   previewURL: string
   tags: string
+  hits?:string
 }
 type Params ={
   q?:string
@@ -19,21 +22,19 @@ type Tags = {
 }
 
 type ImagesState = {
-  images: Images[]
+  images: ImagesType[]
   lastTags: Tags[]
   status: null|string
-  error: null
+  error: null | undefined
 }
-type Error = {
-  message:string
-}
+
 
 export const getPictureByQuery = createAsyncThunk(
   'pictureSlice/getPictureByQuery',
-  async ({ q, page }:{q:string, page:number}, { rejectedWithValue}:any) => {
+  async ({ q, page }:{q:string | null | undefined, page:number}, { rejectedWithValue}:any) => {
     try {
  return await pictureService.getImagesByQuery(q, page);
-    } catch (e) {
+    } catch (e:any) {
       rejectedWithValue(e.message);
     }
   }
@@ -48,7 +49,7 @@ const initialState: ImagesState = {
 
 const pictureSlice = createSlice({
   name: 'pictureSlice',
-initialState,
+  initialState,
   reducers: {
     setTag(state, action) {
       if (state.lastTags.length === 3) {
@@ -62,8 +63,8 @@ initialState,
     setInitialTags(state, action) {
       state.lastTags = action.payload;
     },
-    resetImages(state) {
-      state.images = [];
+    resetImages(state, action) {
+      state.images = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -72,8 +73,11 @@ initialState,
     state.error = null
    })
    builder.addCase(getPictureByQuery.fulfilled, (state, action)=>{
-           state.status = 'fulfilled';
+     state.status = 'fulfilled';
      state.images = action.payload.hits;
+   })
+   builder.addCase(getPictureByQuery.rejected, (state) =>{
+    state.status = 'error';
    })
   }
 });
@@ -81,15 +85,3 @@ initialState,
 export const { setTag, deleteTag, setInitialTags, resetImages } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;
- // [getPictureByQuery.pending]: (state) => {
-    //   state.status = 'pending...';
-    //   state.error = null;
-    // },
-    // [getPictureByQuery.fulfilled]: (state, action) => {
-    //   state.status = 'fulfilled';
-    //   state.images = action.payload.hits;
-    // },
-    // [getPictureByQuery.rejected]: (state, action) => {
-    //   state.status = 'error';
-    //   state.error = action.payload;
-    // }

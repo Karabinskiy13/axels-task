@@ -9,6 +9,8 @@ import { IImage } from '../interfaces/Image';
 type Props = {
   picture: IImage
   showModal: (status:boolean) => void | undefined 
+  largeImageURL?:string
+  hits?:string
 }
 
 const SinglePicture = ({ picture, showModal } : Props) => (

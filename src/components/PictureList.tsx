@@ -7,7 +7,7 @@ import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {
+import pictureReducer, {
   deleteTag,
   getPictureByQuery,
   setTag,
@@ -17,15 +17,42 @@ import {
 import { ModalView, SinglePicture } from './index';
 
 import { Header, Tags } from '../styled/PictureList';
+import store, { RootState } from '../redux/store';
+import { IImage } from '../interfaces/Image';
+
+type ImagesType = {
+  id:number
+  previewURL: string
+  tags: string
+  hits: string
+  largeImageURL: string
+}
+type Params ={
+  q?:string
+  page:number
+}
+type Tags = {
+  id: string
+  text?:string
+}
+
+type ImagesState = {
+  images: ImagesType[]
+  lastTags: Tags[]
+  status: null|string
+  error: null
+}
 
 const PictureList = () => {
   const dispatch = useDispatch();
-  const { images, lastTags } = useSelector((state) => state.pictureReducer);
+  const { images, lastTags } = useSelector((state: RootState) => state.pictureReducer);
+  console.log(images);
+  
 
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
-  const openModal = (url: React.SetStateAction<string>) => {
+  const openModal = (url: string) => {
     setModalStatus(true);
     setModalImageUrl(url);
   };
@@ -37,15 +64,17 @@ const PictureList = () => {
   });
 
   useEffect(() => {
+    console.log(images);
+    
     setQuery({
-      tags: lastTags.map((t: { id: number; }) => t.id),
+      tags: lastTags.map((t:Tags) => t.id),
       activeTag: activeTag || undefined,
       previewURL: modalImageUrl || undefined
     });
   }, [lastTags, activeTag, modalImageUrl]);
 
   useEffect(() => {
-    lastTags.length === 0 ? dispatch(resetImages()) : false;
+    lastTags.length === 0 ? dispatch(resetImages([])) : false;
   }, [lastTags]);
 
   useEffect(() => {
@@ -58,21 +87,21 @@ const PictureList = () => {
         )
       );
       !query.activeTag
-        ? dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }))
+        ? store.dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }))
         : setActiveTag(query.activeTag),
-        dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
+          store.dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
 
       query.previewURL ? openModal(query.previewURL) : false;
     }
   }, []);
 
-  const handleAddition = (tag: { id: number; }) => {
+  const handleAddition = (tag: { id: string; }) => {
     dispatch(setTag(tag));
-    dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
+    store.dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
   };
   const handleDelete = (index: number) => {
     dispatch(deleteTag(index));
-    dispatch(
+   store.dispatch(
       getPictureByQuery({
         q: lastTags[index + 1] ? lastTags[index + 1].id : lastTags[index - 1].id,
         page: 1
@@ -80,7 +109,7 @@ const PictureList = () => {
     );
   };
   const handleTagClick = (index: number) => {
-    dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
+    store.dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
     setActiveTag(lastTags[index].id);
   };
   return (
@@ -101,7 +130,7 @@ const PictureList = () => {
       <Container fluid>
         <Row>
           {images &&
-            images.map((picture: { id: React.Key | null | undefined; largeImageURL: any; }) => (
+            images.map((picture) => (
               <Col sm={6} md={4} xl={2} key={picture.id}>
                 <SinglePicture
                   picture={picture}
