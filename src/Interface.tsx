@@ -3,5 +3,5 @@ largeImageURL: string | undefined
 id?: number | null
 previewURL : string
 tags?: string
-hits?: string
+hits?: []
 }

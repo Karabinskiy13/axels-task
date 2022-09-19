@@ -4,7 +4,7 @@ import { Modal, Image } from 'react-bootstrap';
 
 type Props = {
   show? : boolean | undefined
-  url:string
+  url: string
   hideModal: (()=> void)
 }
 

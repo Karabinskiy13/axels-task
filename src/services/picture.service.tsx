@@ -1,5 +1,5 @@
 import axiosService from './axios.service';
-import { IImage } from '../interfaces/Image';
+import { IImage } from '../Interface';
 
 
 

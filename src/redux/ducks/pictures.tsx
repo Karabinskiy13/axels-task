@@ -1,25 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { buildQueries } from '@testing-library/react';
-import { IImage } from '../../interfaces/Image';
-
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { pictureService } from '../../services/picture.service';
-
-type ImagesType = {
-  largeImageURL: string
-  id:number
-  previewURL: string
-  tags: string
-  hits?:string
-}
-type Params ={
-  q?:string
-  page:number
-}
-type Tags = {
-  id: string
-  text:string
-}
+import {ImagesType, Tags} from '../../types'
 
 type ImagesState = {
   images: ImagesType[]

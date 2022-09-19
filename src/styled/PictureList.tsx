@@ -17,7 +17,7 @@ export const Header = styled.label`
   display: flex;
   font-size: 20px;
 `;
-export const Tags = styled.div`
+export const TagsStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

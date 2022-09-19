@@ -7,7 +7,7 @@ import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import pictureReducer, {
+import  {
   deleteTag,
   getPictureByQuery,
   setTag,
@@ -16,39 +16,16 @@ import pictureReducer, {
 } from '../redux/ducks/pictures';
 import { ModalView, SinglePicture } from './index';
 
-import { Header, Tags } from '../styled/PictureList';
+import { Header, TagsStyle } from '../styled/PictureList';
 import store, { RootState } from '../redux/store';
-import { IImage } from '../interfaces/Image';
+import { Tags } from '../types';
 
-type ImagesType = {
-  id:number
-  previewURL: string
-  tags: string
-  hits: string
-  largeImageURL: string
-}
-type Params ={
-  q?:string
-  page:number
-}
-type Tags = {
-  id: string
-  text?:string
-}
 
-type ImagesState = {
-  images: ImagesType[]
-  lastTags: Tags[]
-  status: null|string
-  error: null
-}
 
 const PictureList = () => {
   const dispatch = useDispatch();
   const { images, lastTags } = useSelector((state: RootState) => state.pictureReducer);
-  console.log(images);
   
-
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
@@ -64,8 +41,7 @@ const PictureList = () => {
   });
 
   useEffect(() => {
-    console.log(images);
-    
+
     setQuery({
       tags: lastTags.map((t:Tags) => t.id),
       activeTag: activeTag || undefined,
@@ -117,7 +93,7 @@ const PictureList = () => {
       <Header>
         <Form.Label className="form__header">Picture Application</Form.Label>
       </Header>
-      <Tags>
+      <TagsStyle>
         <ReactTags
           inputFieldPosition="top"
           allowDragDrop={false}
@@ -126,7 +102,7 @@ const PictureList = () => {
           handleDelete={handleDelete}
           handleTagClick={handleTagClick}
         />
-      </Tags>
+      </TagsStyle>
       <Container fluid>
         <Row>
           {images &&

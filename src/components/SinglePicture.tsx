@@ -4,11 +4,11 @@ import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Columns } from '../styled/SinglePicture';
-import { IImage } from '../interfaces/Image';
+import { IImage } from '../Interface';
 
 type Props = {
   picture: IImage
-  showModal: (status:boolean) => void | undefined 
+  showModal: (status: boolean) => void | undefined 
   largeImageURL?:string
   hits?:string
 }
