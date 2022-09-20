@@ -3,12 +3,12 @@ import React from 'react';
 import { Modal, Image } from 'react-bootstrap';
 
 type Props = {
-  show? : boolean | undefined
-  url: string
-  hideModal: (()=> void)
-}
+  show?: boolean;
+  url: string;
+  hideModal: () => void;
+};
 
-const ModalView = ({ show, url, hideModal } :Props) => (
+const ModalView = ({ show, url, hideModal }: Props) => (
   <Modal
     show={show}
     size="lg"

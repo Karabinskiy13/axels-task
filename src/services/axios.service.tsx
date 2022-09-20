@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
-import { baseURL } from '../constants';
+import { baseURL, apiKey } from '../constants';
 
 const axiosInstance = axios.create({
   baseURL,
-  params: { key: '29600273-dbde9bb11b7bad6c0f81a0e0a' }
+  params: { key: apiKey }
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    return Promise.reject(error);
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    return await Promise.reject(error);
   }
 );
 export default axiosInstance;

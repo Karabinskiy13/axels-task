@@ -7,7 +7,7 @@ import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import  {
+import {
   deleteTag,
   getPictureByQuery,
   setTag,
@@ -18,14 +18,12 @@ import { ModalView, SinglePicture } from './index';
 
 import { Header, TagsStyle } from '../styled/PictureList';
 import store, { RootState } from '../redux/store';
-import { Tags } from '../types';
-
-
+import { Tag } from '../types';
 
 const PictureList = () => {
   const dispatch = useDispatch();
   const { images, lastTags } = useSelector((state: RootState) => state.pictureReducer);
-  
+
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
@@ -41,9 +39,8 @@ const PictureList = () => {
   });
 
   useEffect(() => {
-
     setQuery({
-      tags: lastTags.map((t:Tags) => t.id),
+      tags: lastTags.map((tag) => tag.id),
       activeTag: activeTag || undefined,
       previewURL: modalImageUrl || undefined
     });
@@ -62,22 +59,27 @@ const PictureList = () => {
           })
         )
       );
-      !query.activeTag
-        ? store.dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }))
-        : setActiveTag(query.activeTag),
-          store.dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
 
-      query.previewURL ? openModal(query.previewURL) : false;
+      if (!query.activeTag) {
+        store.dispatch(getPictureByQuery({ q: query.tags[0] as string, page: 1 }));
+      } else {
+        setActiveTag(query.activeTag);
+        store.dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
+      }
+    }
+
+    if (query.previewURL) {
+      openModal(query.previewURL);
     }
   }, []);
 
-  const handleAddition = (tag: { id: string; }) => {
+  const handleAddition = (tag: Tag) => {
     dispatch(setTag(tag));
     store.dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
   };
   const handleDelete = (index: number) => {
     dispatch(deleteTag(index));
-   store.dispatch(
+    store.dispatch(
       getPictureByQuery({
         q: lastTags[index + 1] ? lastTags[index + 1].id : lastTags[index - 1].id,
         page: 1
