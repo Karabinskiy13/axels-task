@@ -3,7 +3,7 @@ export type Tag = {
   text: string;
 };
 
-export type ImagesType = {
+export type Image = {
   largeImageURL: string;
   id: number;
   previewURL: string;

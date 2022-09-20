@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
 import { Container, Row, Col, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   deleteTag,

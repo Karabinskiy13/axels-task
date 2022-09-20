@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { pictureService } from '../../services/picture.service';
-import { ImagesType, Tag } from '../../types';
+import { Image, Tag } from '../../types';
 
 interface ImagesState {
-  images: ImagesType[];
+  images: Image[];
   lastTags: Tag[];
   status: null | string;
   error: null | undefined;
@@ -16,8 +16,8 @@ export const getPictureByQuery = createAsyncThunk(
   async ({ q, page }: { q: string; page: number }, { rejectWithValue }) => {
     try {
       return await pictureService.getImagesByQuery(q, page);
-    } catch (e) {
-      rejectWithValue((e as AxiosError).message);
+    } catch (error) {
+      rejectWithValue((error as AxiosError).message);
     }
   }
 );
