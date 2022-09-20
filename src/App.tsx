@@ -15,4 +15,5 @@ const App = () => (
     </QueryParamProvider>
   </div>
 );
+
 export default App;
