@@ -2,7 +2,13 @@ import React from 'react';
 
 import { Modal, Image } from 'react-bootstrap';
 
-const ModalView = ({ show, url, hideModal }) => (
+type Props = {
+  show?: boolean;
+  url: string;
+  hideModal: () => void;
+};
+
+const ModalView = ({ show, url, hideModal }: Props) => (
   <Modal
     show={show}
     size="lg"

@@ -4,6 +4,7 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { QueryParamProvider } from 'use-query-params';
 
 import { PictureList } from './components';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
   <div className="App">
@@ -14,4 +15,5 @@ const App = () => (
     </QueryParamProvider>
   </div>
 );
+
 export default App;

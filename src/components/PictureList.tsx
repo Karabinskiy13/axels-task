@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
 import { Container, Row, Col, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   deleteTag,
@@ -16,16 +15,18 @@ import {
 } from '../redux/ducks/pictures';
 import { ModalView, SinglePicture } from './index';
 
-import { Header, Tags } from '../styled/PictureList';
+import { Header, TagsStyle } from '../styled/PictureList';
+import store, { RootState } from '../redux/store';
+import { Tag } from '../types';
 
 const PictureList = () => {
   const dispatch = useDispatch();
-  const { images, lastTags } = useSelector((state) => state.pictureReducer);
+  const { images, lastTags } = useSelector((state: RootState) => state.pictureReducer);
 
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
-  const openModal = (url) => {
+  const openModal = (url: string) => {
     setModalStatus(true);
     setModalImageUrl(url);
   };
@@ -38,14 +39,14 @@ const PictureList = () => {
 
   useEffect(() => {
     setQuery({
-      tags: lastTags.map((t) => t.id),
+      tags: lastTags.map((tag) => tag.id),
       activeTag: activeTag || undefined,
       previewURL: modalImageUrl || undefined
     });
   }, [lastTags, activeTag, modalImageUrl]);
 
   useEffect(() => {
-    lastTags.length === 0 ? dispatch(resetImages()) : false;
+    lastTags.length === 0 ? dispatch(resetImages([])) : false;
   }, [lastTags]);
 
   useEffect(() => {
@@ -57,30 +58,35 @@ const PictureList = () => {
           })
         )
       );
-      !query.activeTag
-        ? dispatch(getPictureByQuery({ q: query.tags[0], page: 1 }))
-        : setActiveTag(query.activeTag),
-        dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
 
-      query.previewURL ? openModal(query.previewURL) : false;
+      if (!query.activeTag) {
+        store.dispatch(getPictureByQuery({ q: query.tags[0] as string, page: 1 }));
+      } else {
+        setActiveTag(query.activeTag);
+        store.dispatch(getPictureByQuery({ q: query.activeTag, page: 1 }));
+      }
+    }
+
+    if (query.previewURL) {
+      openModal(query.previewURL);
     }
   }, []);
 
-  const handleAddition = (tag) => {
+  const handleAddition = (tag: Tag) => {
     dispatch(setTag(tag));
-    dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
+    store.dispatch(getPictureByQuery({ q: tag.id, page: 1 }));
   };
-  const handleDelete = (index) => {
+  const handleDelete = (index: number) => {
     dispatch(deleteTag(index));
-    dispatch(
+    store.dispatch(
       getPictureByQuery({
         q: lastTags[index + 1] ? lastTags[index + 1].id : lastTags[index - 1].id,
         page: 1
       })
     );
   };
-  const handleTagClick = (index) => {
-    dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
+  const handleTagClick = (index: number) => {
+    store.dispatch(getPictureByQuery({ q: lastTags[index].id, page: 1 }));
     setActiveTag(lastTags[index].id);
   };
   return (
@@ -88,7 +94,7 @@ const PictureList = () => {
       <Header>
         <Form.Label className="form__header">Picture Application</Form.Label>
       </Header>
-      <Tags>
+      <TagsStyle>
         <ReactTags
           inputFieldPosition="top"
           allowDragDrop={false}
@@ -97,7 +103,7 @@ const PictureList = () => {
           handleDelete={handleDelete}
           handleTagClick={handleTagClick}
         />
-      </Tags>
+      </TagsStyle>
       <Container fluid>
         <Row>
           {images &&
