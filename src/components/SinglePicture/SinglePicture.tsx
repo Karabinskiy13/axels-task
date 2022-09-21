@@ -2,8 +2,8 @@ import React from 'react';
 
 import Card from 'react-bootstrap/Card';
 
-import { Columns } from '../styled/SinglePicture';
-import { Image } from '../types';
+import { Columns } from '../../styled/SinglePicture';
+import { Image } from '../../types';
 
 interface Props {
   picture: Image;
