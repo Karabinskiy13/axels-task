@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from '@jest/globals';
+
 import pictureReducer, {
   setTag,
   setInitialTags,
   resetImages,
   getPictureByQuery
-} from '../ducks/pictures';
+} from '../redux/ducks/pictures';
 
 const initialState = {
   images: [],
@@ -23,6 +24,7 @@ describe('<Ducks>', () => {
       error: null
     });
   });
+
   it('should handle tags', () => {
     expect(pictureReducer(initialState, setTag({ id: 'Cats', text: 'Cats' }))).toEqual({
       images: [],
@@ -31,6 +33,7 @@ describe('<Ducks>', () => {
       error: null
     });
   });
+
   it('should handle initial tags', () => {
     expect(
       pictureReducer(
@@ -52,6 +55,7 @@ describe('<Ducks>', () => {
       error: null
     });
   });
+
   it('should return empty state of images', () => {
     expect(pictureReducer(initialState, resetImages([]))).toEqual({
       images: [],
@@ -61,6 +65,7 @@ describe('<Ducks>', () => {
     });
   });
 });
+
 describe('<ExtraReducers>', () => {
   describe('reducers', () => {
     it('sets fetching true when Images is pending', () => {
@@ -78,6 +83,7 @@ describe('<ExtraReducers>', () => {
           hits: []
         }
       };
+
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({
         images: [],

@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { jest } from '@jest/globals';
-import ModalView from '../ModalView';
+
+import ModalView from '../components/ModalView';
 
 describe('<SinglePicture>', () => {
   it('Should render component', () => {

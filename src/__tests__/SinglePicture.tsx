@@ -1,8 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import SinglePicture from '../SinglePicture';
-import { Image } from '../../types';
 import { jest } from '@jest/globals';
+import { shallow } from 'enzyme';
+
+import SinglePicture from '../components/SinglePicture';
+
+import { Image } from '../types';
 
 const singlePicture: Image = {
   id: 1,

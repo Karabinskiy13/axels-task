@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PictureList from '../PictureList';
-import store from '../../redux/store';
+import App from '../App';
+import store from '../redux/store';
 import { Provider } from 'react-redux';
 
 describe('<SinglePicture>', () => {
   it('Should render component', () => {
     const wrapper = shallow(
       <Provider store={store}>
-        <PictureList />
+        <App />
       </Provider>
     );
     expect(wrapper).toMatchSnapshot();
