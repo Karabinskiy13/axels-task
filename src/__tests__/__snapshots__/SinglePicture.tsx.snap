@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SinglePicture> Should render component 1`] = `
+<Styled(Col)>
+  <Card
+    body={false}
+    border="dark"
+    className="picture"
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+        "maxWidth": "200px",
+      }
+    }
+  >
+    <CardBody
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "justifyContent": "center",
+          "minHeight": "180px",
+          "textAlign": "center",
+        }
+      }
+    >
+      <CardImg
+        className="picture__image"
+        src="/image.png"
+        style={
+          Object {
+            "height": "100%",
+            "maxWidth": "100%",
+            "width": "auto",
+          }
+        }
+      />
+    </CardBody>
+  </Card>
+</Styled(Col)>
+`;
