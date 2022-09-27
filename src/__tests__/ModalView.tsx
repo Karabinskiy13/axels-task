@@ -1,17 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { jest } from '@jest/globals';
 
 import ModalView from '../components/ModalView';
 
-describe('<SinglePicture>', () => {
-  it('Should render component', () => {
-    const wrapper = shallow(<ModalView show={true} url={'/image.png'} hideModal={jest.fn()} />);
-    expect(wrapper).toMatchSnapshot();
+describe('<Modal View>', () => {
+  test('Should render component', () => {
+    const { asFragment } = render(
+      <ModalView show={true} url={'/image.png'} hideModal={jest.fn()} />
+    );
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Should display modal view from props', () => {
-    const wrapper = shallow(<ModalView show={true} url={'/'} hideModal={jest.fn()} />);
-    expect(wrapper.find('.modal__image').prop('src')).toEqual('/');
+  test('Should display modal view from props', async () => {
+    render(<ModalView show={true} url={'/image.png'} hideModal={jest.fn()} />);
+    await screen.findAllByAltText('modal__image');
+    expect(screen.getByAltText('modal__image')).toHaveAttribute('src', '/image.png');
   });
 });

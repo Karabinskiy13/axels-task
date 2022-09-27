@@ -21,7 +21,7 @@ const ModalView = ({ show, url, hideModal }: Props) => (
       <br />
     </Modal.Header>
     <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Image className="modal__image" src={url} fluid></Image>
+      <Image className="modal__image" alt="modal__image" src={url} fluid></Image>
     </Modal.Body>
   </Modal>
 );

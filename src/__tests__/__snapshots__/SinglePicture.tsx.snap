@@ -1,42 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SinglePicture> Should render component 1`] = `
-<Styled(Col)>
-  <Card
-    body={false}
-    border="dark"
-    className="picture"
-    onClick={[Function]}
-    style={
-      Object {
-        "cursor": "pointer",
-        "maxWidth": "200px",
-      }
-    }
+<DocumentFragment>
+  <div
+    class="sc-gsnTZi dztBFZ col"
   >
-    <CardBody
-      style={
-        Object {
-          "alignItems": "center",
-          "display": "flex",
-          "justifyContent": "center",
-          "minHeight": "180px",
-          "textAlign": "center",
-        }
-      }
+    <div
+      class="picture card border-dark"
+      style="cursor: pointer; max-width: 200px;"
     >
-      <CardImg
-        className="picture__image"
-        src="/image.png"
-        style={
-          Object {
-            "height": "100%",
-            "maxWidth": "100%",
-            "width": "auto",
-          }
-        }
-      />
-    </CardBody>
-  </Card>
-</Styled(Col)>
+      <div
+        class="card-body"
+        style="text-align: center; min-height: 180px; display: flex; justify-content: center; align-items: center;"
+      >
+        <img
+          alt="picture__image"
+          class="card-img picture__image"
+          src="/image.png"
+          style="max-width: 100%; width: auto; height: 100%;"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;

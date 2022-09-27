@@ -1,17 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
+import { QueryParamProvider } from 'use-query-params';
 
 import App from '../App';
 import store from '../redux/store';
 
-describe('<SinglePicture>', () => {
-  it('Should render component', () => {
-    const wrapper = shallow(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
+test('render App component', () => {
+  const { asFragment } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <QueryParamProvider adapter={ReactRouter6Adapter}>
+          <App />
+        </QueryParamProvider>
+      </BrowserRouter>
+    </Provider>
+  );
+  expect(asFragment()).toMatchSnapshot();
 });
