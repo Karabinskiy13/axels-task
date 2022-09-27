@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+
 import App from '../App';
 import store from '../redux/store';
-import { Provider } from 'react-redux';
 
 describe('<SinglePicture>', () => {
   it('Should render component', () => {

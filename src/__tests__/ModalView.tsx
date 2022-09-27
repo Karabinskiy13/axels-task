@@ -10,7 +10,7 @@ describe('<SinglePicture>', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('Should display props', () => {
+  it('Should display modal view from props', () => {
     const wrapper = shallow(<ModalView show={true} url={'/'} hideModal={jest.fn()} />);
     expect(wrapper.find('.modal__image').prop('src')).toEqual('/');
   });

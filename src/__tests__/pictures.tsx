@@ -16,7 +16,7 @@ const initialState = {
 };
 
 describe('<Ducks>', () => {
-  it('should return the initial state', () => {
+  it('Should return the initial state', () => {
     expect(pictureReducer(undefined, { type: undefined })).toEqual({
       images: [],
       lastTags: [],
@@ -25,7 +25,7 @@ describe('<Ducks>', () => {
     });
   });
 
-  it('should handle tags', () => {
+  it('Should handle tags', () => {
     expect(pictureReducer(initialState, setTag({ id: 'Cats', text: 'Cats' }))).toEqual({
       images: [],
       lastTags: [{ id: 'Cats', text: 'Cats' }],
@@ -34,7 +34,7 @@ describe('<Ducks>', () => {
     });
   });
 
-  it('should handle initial tags', () => {
+  it('Should handle initial tags', () => {
     expect(
       pictureReducer(
         initialState,
@@ -56,7 +56,7 @@ describe('<Ducks>', () => {
     });
   });
 
-  it('should return empty state of images', () => {
+  it('Should return empty state of images', () => {
     expect(pictureReducer(initialState, resetImages([]))).toEqual({
       images: [],
       lastTags: [],
@@ -68,13 +68,13 @@ describe('<Ducks>', () => {
 
 describe('<ExtraReducers>', () => {
   describe('reducers', () => {
-    it('sets fetching true when Images is pending', () => {
+    it('Should sets status pending when Images is pending', () => {
       const action = { type: getPictureByQuery.pending.type };
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({ images: [], lastTags: [], status: 'pending...', error: null });
     });
 
-    it('sets images when getPictureByQuery is fulfilled', () => {
+    it('Should sets images when Images is fulfilled', () => {
       const action = {
         type: getPictureByQuery.fulfilled.type,
         payload: {
@@ -93,7 +93,7 @@ describe('<ExtraReducers>', () => {
       });
     });
 
-    it('sets fetching false when getPictureByQuery is rejected', () => {
+    it('Should sets status error when Images is rejected', () => {
       const action = { type: getPictureByQuery.rejected.type, payload: { error: 'error' } };
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({ images: [], lastTags: [], status: 'error', error: null });

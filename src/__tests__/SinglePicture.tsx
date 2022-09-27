@@ -19,7 +19,7 @@ describe('<SinglePicture>', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('Calling callback on card click', () => {
+  it('Should call a callback when the card is clicked', () => {
     const showModalCb = jest.fn(() => true);
     const wrapper = shallow(<SinglePicture picture={singlePicture} showModal={showModalCb} />);
     const card = wrapper.find('.picture');
@@ -27,7 +27,7 @@ describe('<SinglePicture>', () => {
     expect(showModalCb).toBeCalledWith(true);
   });
 
-  it('Should display props', () => {
+  it('Should display image from props', () => {
     const wrapper = shallow(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
     expect(wrapper.find('.picture__image').prop('src')).toEqual(singlePicture.previewURL);
   });
