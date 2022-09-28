@@ -22,17 +22,15 @@ describe('<SinglePicture>', () => {
 
   test('Should call a callback when the card is clicked', async () => {
     const showModalCb = jest.fn(() => true);
-    const { asFragment } = render(
-      <SinglePicture picture={singlePicture} showModal={showModalCb} />
-    );
+    render(<SinglePicture picture={singlePicture} showModal={showModalCb} />);
     const user = userEvent.setup();
     await user.click(screen.getByAltText('picture__image'));
     expect(showModalCb).toBeCalledWith(true);
   });
 
-  //   it('Should display image from props', async () => {
-  //     const { asFragment } = render(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
-
-  //     expect(.find('.picture__image').prop('src')).toEqual(singlePicture.previewURL);
-  //   });
+  test('Should display image from props', async () => {
+    render(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
+    await screen.findAllByAltText('picture__image');
+    expect(screen.getByAltText('picture__image')).toHaveAttribute('src', '/image.png');
+  });
 });

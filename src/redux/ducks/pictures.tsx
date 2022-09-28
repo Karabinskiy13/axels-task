@@ -7,15 +7,29 @@ import { Image, Tag } from '../../types';
 interface ImagesState {
   images: Image[];
   lastTags: Tag[];
+  page: number;
+  canLoadMore: boolean;
   status: null | string;
   error: null | undefined;
 }
 
 export const getPictureByQuery = createAsyncThunk(
   'pictureSlice/getPictureByQuery',
-  async ({ q, page }: { q: string; page: number }, { rejectWithValue }) => {
+  async (
+    { q, reset = false }: { q: string; reset?: boolean },
+    { rejectWithValue, getState, dispatch }
+  ) => {
     try {
-      return await pictureService.getImagesByQuery(q, page);
+      if (reset) {
+        await dispatch(resetPage());
+        await dispatch(resetImages());
+        return await pictureService.getImagesByQuery(q, 1);
+      } else {
+        const state = getState() as {
+          pictureReducer: ImagesState;
+        };
+        return await pictureService.getImagesByQuery(q, state.pictureReducer.page);
+      }
     } catch (error) {
       rejectWithValue((error as AxiosError).message);
     }
@@ -25,6 +39,8 @@ export const getPictureByQuery = createAsyncThunk(
 const initialState: ImagesState = {
   images: [],
   lastTags: [],
+  page: 1,
+  canLoadMore: true,
   status: null,
   error: null
 };
@@ -45,8 +61,15 @@ const pictureSlice = createSlice({
     setInitialTags(state, { payload }) {
       state.lastTags = payload;
     },
-    resetImages(state, { payload }) {
-      state.images = payload;
+    resetImages(state) {
+      state.images = [];
+    },
+    increasePage(state) {
+      state.page += 1;
+    },
+    resetPage(state) {
+      state.page = 1;
+      state.canLoadMore = true;
     }
   },
   extraReducers: (builder) => {
@@ -54,9 +77,10 @@ const pictureSlice = createSlice({
       state.status = 'pending...';
       state.error = null;
     });
-    builder.addCase(getPictureByQuery.fulfilled, (state, action) => {
+    builder.addCase(getPictureByQuery.fulfilled, (state, { meta, payload }) => {
       state.status = 'fulfilled';
-      state.images = action.payload.hits;
+      state.images = meta.arg.reset ? payload.hits : [...state.images, ...payload.hits];
+      if (payload.hits.length < 24) state.canLoadMore = false;
     });
     builder.addCase(getPictureByQuery.rejected, (state) => {
       state.status = 'error';
@@ -64,6 +88,7 @@ const pictureSlice = createSlice({
   }
 });
 
-export const { setTag, deleteTag, setInitialTags, resetImages } = pictureSlice.actions;
+export const { setTag, deleteTag, setInitialTags, resetImages, increasePage, resetPage } =
+  pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;

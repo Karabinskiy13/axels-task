@@ -48,6 +48,16 @@ exports[`render App component 1`] = `
         class="row"
       />
     </div>
+    <div
+      style="align-items: center; display: flex; justify-content: center; margin-top: 20px;"
+    >
+      <button
+        class="btn btn-secondary btn-lg"
+        type="button"
+      >
+        Load more
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;
