@@ -15,10 +15,10 @@ import {
   increasePage
 } from '../redux/ducks/pictures';
 import { ModalView, SinglePicture } from './index';
-
-import { Header, TagsStyle } from '../styled/PictureList';
 import store, { RootState } from '../redux/store';
 import { Tag } from '../types';
+
+import { Header, TagsStyle } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();

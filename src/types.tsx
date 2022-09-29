@@ -8,5 +8,5 @@ export type Image = {
   id: number;
   previewURL: string;
   tags: string;
-  hits?: [];
+  hits?: [{ largeImageURL: string; id: number; previewURL: string; tags: string }];
 };

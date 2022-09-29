@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from '@jest/globals';
+import { configureStore } from '@reduxjs/toolkit';
 
 import pictureReducer, {
   setTag,
@@ -91,23 +92,24 @@ describe('<ExtraReducers>', () => {
       });
     });
 
-    test('Should sets images when Images is fulfilled', () => {
-      const action = {
-        type: getPictureByQuery.fulfilled.type
+    test('Should sets images when Images is fulfilled', async () => {
+      const params = {
+        q: 'cats',
+        page: 1
       };
-
-      const state = pictureReducer(initialState, {
-        action,
-        type: undefined
+      const store = configureStore({
+        reducer: function (state = initialState, action) {
+          switch (action.type) {
+            case 'getImagesByQuery':
+              return action.payload;
+            default:
+              return state;
+          }
+        }
       });
-      expect(state).toEqual({
-        images: [],
-        lastTags: [],
-        status: 'fulfilled',
-        error: null,
-        page: 1,
-        canLoadMore: true
-      });
+      await store.dispatch(getPictureByQuery(params));
+      const state = store.getState();
+      expect(state).toEqual(initialState);
     });
 
     test('Should sets status error when Images is rejected', () => {
