@@ -79,7 +79,7 @@ describe('<Ducks>', () => {
 
 describe('<ExtraReducers>', () => {
   describe('reducers', () => {
-    test('Should sets status pending when Images is pending', () => {
+    test('Should set status pending when Images is pending', () => {
       const action = { type: getPictureByQuery.pending.type };
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({
@@ -92,7 +92,7 @@ describe('<ExtraReducers>', () => {
       });
     });
 
-    test('Should sets images when Images is fulfilled', async () => {
+    test('Should set images when Images is fulfilled', async () => {
       const params = {
         q: 'cats',
         page: 1
@@ -112,7 +112,7 @@ describe('<ExtraReducers>', () => {
       expect(state).toEqual(initialState);
     });
 
-    test('Should sets status error when Images is rejected', () => {
+    test('Should set status error when Images is rejected', () => {
       const action = { type: getPictureByQuery.rejected.type, payload: { error: 'error' } };
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({

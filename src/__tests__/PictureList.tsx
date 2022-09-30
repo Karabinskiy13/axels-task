@@ -8,7 +8,7 @@ import { QueryParamProvider } from 'use-query-params';
 import store from '../redux/store';
 import { PictureList } from '../components';
 
-test('render App component', async () => {
+test('Should render App component', async () => {
   const { asFragment } = render(
     <Provider store={store}>
       <BrowserRouter>

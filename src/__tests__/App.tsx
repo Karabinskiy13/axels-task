@@ -8,7 +8,7 @@ import { QueryParamProvider } from 'use-query-params';
 import App from '../App';
 import store from '../redux/store';
 
-test('render App component', () => {
+test('Should render App component', () => {
   const { asFragment } = render(
     <Provider store={store}>
       <BrowserRouter>
