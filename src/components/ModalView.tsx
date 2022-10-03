@@ -15,13 +15,13 @@ const ModalView = ({ show, url, hideModal }: Props) => (
     fullscreen
     onHide={() => hideModal()}
     aria-labelledby="contained-modal-title-vcenter"
-    centred>
+    centred="true">
     <Modal.Header closeButton>
       <Modal.Title id="contained-modal-title-vcenter">Image Preview</Modal.Title>
       <br />
     </Modal.Header>
     <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Image className="modal__image" src={url} fluid></Image>
+      <Image className="modal__image" alt="modal__image" src={url} fluid></Image>
     </Modal.Body>
   </Modal>
 );

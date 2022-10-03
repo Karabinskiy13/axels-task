@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from '@jest/globals';
+import { configureStore } from '@reduxjs/toolkit';
 
 import pictureReducer, {
   setTag,
@@ -12,29 +13,35 @@ const initialState = {
   images: [],
   lastTags: [],
   status: null,
-  error: null
+  error: null,
+  page: 1,
+  canLoadMore: true
 };
 
 describe('<Ducks>', () => {
-  it('Should return the initial state', () => {
+  test('Should return the initial state', () => {
     expect(pictureReducer(undefined, { type: undefined })).toEqual({
       images: [],
       lastTags: [],
       status: null,
-      error: null
+      error: null,
+      page: 1,
+      canLoadMore: true
     });
   });
 
-  it('Should handle tags', () => {
+  test('Should handle tags', () => {
     expect(pictureReducer(initialState, setTag({ id: 'Cats', text: 'Cats' }))).toEqual({
       images: [],
       lastTags: [{ id: 'Cats', text: 'Cats' }],
       status: null,
-      error: null
+      error: null,
+      page: 1,
+      canLoadMore: true
     });
   });
 
-  it('Should handle initial tags', () => {
+  test('Should handle initial tags', () => {
     expect(
       pictureReducer(
         initialState,
@@ -52,51 +59,70 @@ describe('<Ducks>', () => {
         { id: 'Moon', text: 'Moon' }
       ],
       status: null,
-      error: null
+      error: null,
+      page: 1,
+      canLoadMore: true
     });
   });
 
-  it('Should return empty state of images', () => {
-    expect(pictureReducer(initialState, resetImages([]))).toEqual({
+  test('Should return empty state of images', () => {
+    expect(pictureReducer(initialState, resetImages())).toEqual({
       images: [],
       lastTags: [],
       status: null,
-      error: null
+      error: null,
+      page: 1,
+      canLoadMore: true
     });
   });
 });
 
 describe('<ExtraReducers>', () => {
   describe('reducers', () => {
-    it('Should sets status pending when Images is pending', () => {
+    test('Should set status pending when Images is pending', () => {
       const action = { type: getPictureByQuery.pending.type };
-      const state = pictureReducer(initialState, action);
-      expect(state).toEqual({ images: [], lastTags: [], status: 'pending...', error: null });
-    });
-
-    it('Should sets images when Images is fulfilled', () => {
-      const action = {
-        type: getPictureByQuery.fulfilled.type,
-        payload: {
-          total: 1,
-          totalHits: 1,
-          hits: []
-        }
-      };
-
       const state = pictureReducer(initialState, action);
       expect(state).toEqual({
         images: [],
         lastTags: [],
-        status: 'fulfilled',
-        error: null
+        status: 'pending...',
+        error: null,
+        page: 1,
+        canLoadMore: true
       });
     });
 
-    it('Should sets status error when Images is rejected', () => {
+    test('Should set images when Images is fulfilled', async () => {
+      const params = {
+        q: 'cats',
+        page: 1
+      };
+      const store = configureStore({
+        reducer: function (state = initialState, action) {
+          switch (action.type) {
+            case 'getImagesByQuery':
+              return action.payload;
+            default:
+              return state;
+          }
+        }
+      });
+      await store.dispatch(getPictureByQuery(params));
+      const state = store.getState();
+      expect(state).toEqual(initialState);
+    });
+
+    test('Should set status error when Images is rejected', () => {
       const action = { type: getPictureByQuery.rejected.type, payload: { error: 'error' } };
       const state = pictureReducer(initialState, action);
-      expect(state).toEqual({ images: [], lastTags: [], status: 'error', error: null });
+      expect(state).toEqual({
+        images: [],
+        lastTags: [],
+        status: 'error',
+        error: null,
+        page: 1,
+        canLoadMore: true
+      });
     });
   });
 });

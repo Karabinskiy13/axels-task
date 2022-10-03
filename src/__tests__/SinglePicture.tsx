@@ -1,6 +1,7 @@
 import React from 'react';
 import { jest } from '@jest/globals';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import SinglePicture from '../components/SinglePicture';
 
@@ -14,21 +15,22 @@ const singlePicture: Image = {
 };
 
 describe('<SinglePicture>', () => {
-  it('Should render component', () => {
-    const wrapper = shallow(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
-    expect(wrapper).toMatchSnapshot();
+  test('Should render component', () => {
+    const { asFragment } = render(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Should call a callback when the card is clicked', () => {
+  test('Should call a callback when the card is clicked', async () => {
     const showModalCb = jest.fn(() => true);
-    const wrapper = shallow(<SinglePicture picture={singlePicture} showModal={showModalCb} />);
-    const card = wrapper.find('.picture');
-    card.simulate('click');
+    render(<SinglePicture picture={singlePicture} showModal={showModalCb} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByAltText('picture__image'));
     expect(showModalCb).toBeCalledWith(true);
   });
 
-  it('Should display image from props', () => {
-    const wrapper = shallow(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
-    expect(wrapper.find('.picture__image').prop('src')).toEqual(singlePicture.previewURL);
+  test('Should display image from props', async () => {
+    render(<SinglePicture picture={singlePicture} showModal={jest.fn()} />);
+    await screen.findAllByAltText('picture__image');
+    expect(screen.getByAltText('picture__image')).toHaveAttribute('src', '/image.png');
   });
 });

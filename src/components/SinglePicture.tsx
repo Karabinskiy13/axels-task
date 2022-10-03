@@ -30,6 +30,7 @@ const SinglePicture = ({ picture, showModal }: Props) => (
         <Card.Img
           style={{ maxWidth: '100%', width: 'auto', height: '100%' }}
           className="picture__image"
+          alt="picture__image"
           src={picture.previewURL}
         />
       </Card.Body>

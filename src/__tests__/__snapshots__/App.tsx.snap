@@ -1,29 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SinglePicture> Should render component 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "getServerState": undefined,
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  <App />
-</ContextProvider>
+exports[`render App component 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <div>
+      <label
+        class="sc-gsnTZi gcXMGB"
+      >
+        <label
+          class="form__header form-label"
+        >
+          Picture Application
+        </label>
+      </label>
+      <div
+        class="sc-dkzDqf dklMiL"
+      >
+        <div
+          class="ReactTags__tags react-tags-wrapper"
+        >
+          <p
+            class="sr-only"
+            role="alert"
+            style="position: absolute; overflow: hidden; margin: -1px; padding: 0px; width: 1px; height: 1px; border: 0px;"
+          />
+          <div
+            class="ReactTags__tagInput"
+          >
+            <input
+              aria-label="Press enter to add new tag"
+              class="ReactTags__tagInputField"
+              data-automation="input"
+              data-testid="input"
+              placeholder="Press enter to add new tag"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="ReactTags__selected"
+          />
+        </div>
+      </div>
+      <div
+        class="container-fluid"
+      >
+        <div
+          class="row"
+        />
+      </div>
+      <div
+        style="align-items: center; display: flex; justify-content: center; margin-top: 20px;"
+      >
+        <button
+          class="btn btn-secondary btn-lg"
+          type="button"
+        >
+          Load more
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;
