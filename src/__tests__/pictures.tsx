@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from '@jest/globals';
 import { configureStore } from '@reduxjs/toolkit';
+import { Image } from '../types';
 
 import pictureReducer, {
   setTag,
@@ -8,6 +9,8 @@ import pictureReducer, {
   resetImages,
   getPictureByQuery
 } from '../redux/ducks/pictures';
+
+import { pictureService } from '../services/picture.service';
 
 const initialState = {
   images: [],
@@ -17,6 +20,30 @@ const initialState = {
   page: 1,
   canLoadMore: true
 };
+
+const imagesResponse: Image[] = [
+  {
+    id: 1,
+    previewURL: '/image.png',
+    tags: 'tags',
+    largeImageURL: '/'
+  },
+  {
+    id: 1,
+    previewURL: '/image.png',
+    tags: 'tags',
+    largeImageURL: '/'
+  }
+];
+
+const imagesResponse1: Image[] = [
+  {
+    id: 1,
+    previewURL: '/image.png',
+    tags: 'tags',
+    largeImageURL: '/'
+  }
+];
 
 describe('<Ducks>', () => {
   test('Should return the initial state', () => {
@@ -78,51 +105,49 @@ describe('<Ducks>', () => {
 });
 
 describe('<ExtraReducers>', () => {
-  describe('reducers', () => {
-    test('Should set status pending when Images is pending', () => {
-      const action = { type: getPictureByQuery.pending.type };
-      const state = pictureReducer(initialState, action);
-      expect(state).toEqual({
-        images: [],
-        lastTags: [],
-        status: 'pending...',
-        error: null,
-        page: 1,
-        canLoadMore: true
-      });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+  test('Should set status pending when Images is pending', () => {
+    const action = { type: getPictureByQuery.pending.type };
+    const state = pictureReducer(initialState, action);
+    expect(state).toEqual({
+      images: [],
+      lastTags: [],
+      status: 'pending...',
+      error: null,
+      page: 1,
+      canLoadMore: true
+    });
+  });
+
+  test('Should set images when Images is fulfilled', async () => {
+    jest
+      .spyOn(pictureService, 'getImagesByQuery')
+      .mockResolvedValue({ hits: imagesResponse, total: 100 });
+
+    const params = {
+      q: 'cats',
+      reset: true
+    };
+    const store = configureStore({
+      reducer: pictureReducer
     });
 
-    test('Should set images when Images is fulfilled', async () => {
-      const params = {
-        q: 'cats',
-        page: 1
-      };
-      const store = configureStore({
-        reducer: function (state = initialState, action) {
-          switch (action.type) {
-            case 'getImagesByQuery':
-              return action.payload;
-            default:
-              return state;
-          }
-        }
-      });
-      await store.dispatch(getPictureByQuery(params));
-      const state = store.getState();
-      expect(state).toEqual(initialState);
-    });
+    await store.dispatch(getPictureByQuery(params));
+    expect(store.getState().images).toEqual(imagesResponse);
+  });
 
-    test('Should set status error when Images is rejected', () => {
-      const action = { type: getPictureByQuery.rejected.type, payload: { error: 'error' } };
-      const state = pictureReducer(initialState, action);
-      expect(state).toEqual({
-        images: [],
-        lastTags: [],
-        status: 'error',
-        error: null,
-        page: 1,
-        canLoadMore: true
-      });
+  test('Should set status error when Images is rejected', () => {
+    const action = { type: getPictureByQuery.rejected.type, payload: { error: 'error' } };
+    const state = pictureReducer(initialState, action);
+    expect(state).toEqual({
+      images: [],
+      lastTags: [],
+      status: 'error',
+      error: null,
+      page: 1,
+      canLoadMore: true
     });
   });
 });

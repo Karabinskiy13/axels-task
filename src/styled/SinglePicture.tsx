@@ -1,14 +1,13 @@
 import styled from 'styled-components';
-import { Card, Col } from 'react-bootstrap';
 
-export const Picture = styled(Card)`
+export const Columns = styled.div`
   display: flex;
-  flex-direction: column;
+  align-text: center;
   justify-content: center;
-`;
-export const Columns = styled(Col)`
-  margin-top: 20px;
-  cursor: pointer;
+  align-items: center;
+  min-height: 180px;
+  border: 2px solid gray;
+  border-radius: 10px;
 `;
 export const Modal = styled.button`
   border: none;

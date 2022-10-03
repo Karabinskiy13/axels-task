@@ -79,9 +79,9 @@ const pictureSlice = createSlice({
     });
     builder.addCase(getPictureByQuery.fulfilled, (state, { payload }) => {
       state.status = 'fulfilled';
-      console.log(state.images);
+      if (!payload) return;
       state.images = [...state.images, ...payload.hits];
-      if (payload.hits.length < 24) state.canLoadMore = false;
+      if (payload.hits.length < 24 || !payload) state.canLoadMore = false;
     });
     builder.addCase(getPictureByQuery.rejected, (state) => {
       state.status = 'error';

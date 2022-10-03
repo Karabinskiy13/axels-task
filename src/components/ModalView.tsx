@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Modal, Image } from 'react-bootstrap';
+import { Modal } from '@mui/material';
+
+import { StyledModal } from '../styled/ModalView';
 
 type Props = {
   show: boolean;
@@ -9,20 +11,15 @@ type Props = {
 };
 
 const ModalView = ({ show, url, hideModal }: Props) => (
-  <Modal
-    show={show}
-    size="lg"
-    fullscreen
-    onHide={() => hideModal()}
-    aria-labelledby="contained-modal-title-vcenter"
-    centred="true">
-    <Modal.Header closeButton>
-      <Modal.Title id="contained-modal-title-vcenter">Image Preview</Modal.Title>
-      <br />
-    </Modal.Header>
-    <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Image className="modal__image" alt="modal__image" src={url} fluid></Image>
-    </Modal.Body>
+  <Modal open={show} onClose={() => hideModal()} aria-describedby="modal-modal-picture">
+    <StyledModal>
+      <img
+        className="modal__image"
+        alt="modal__image"
+        src={url}
+        style={{ maxWidth: '1024px', maxHeight: '800px' }}
+      />
+    </StyledModal>
   </Modal>
 );
 

@@ -3,24 +3,13 @@
 exports[`<SinglePicture> Should render component 1`] = `
 <DocumentFragment>
   <div
-    class="sc-gsnTZi dztBFZ col"
+    class="sc-bczRLJ jIrTGT"
   >
-    <div
-      class="picture card border-dark"
-      style="cursor: pointer; max-width: 200px;"
-    >
-      <div
-        class="card-body"
-        style="text-align: center; min-height: 180px; display: flex; justify-content: center; align-items: center;"
-      >
-        <img
-          alt="picture__image"
-          class="card-img picture__image"
-          src="/image.png"
-          style="max-width: 100%; width: auto; height: 100%;"
-        />
-      </div>
-    </div>
+    <img
+      alt="picture__image"
+      class="picture__image"
+      src="/image.png"
+    />
   </div>
 </DocumentFragment>
 `;
