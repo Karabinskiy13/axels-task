@@ -29,18 +29,9 @@ const imagesResponse: Image[] = [
     largeImageURL: '/'
   },
   {
-    id: 1,
+    id: 2,
     previewURL: '/image.png',
-    tags: 'tags',
-    largeImageURL: '/'
-  }
-];
-
-const imagesResponse1: Image[] = [
-  {
-    id: 1,
-    previewURL: '/image.png',
-    tags: 'tags',
+    tags: 'cats',
     largeImageURL: '/'
   }
 ];
