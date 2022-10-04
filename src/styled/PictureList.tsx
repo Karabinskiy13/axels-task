@@ -7,16 +7,6 @@ export const Forma = styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const Header = styled.label`
-  background-color: ${colors.bgColor};
-  color: ${colors.headerColor};
-  width: 100%;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  font-size: 20px;
-`;
 export const TagsStyle = styled.div`
   display: flex;
   justify-content: center;
@@ -64,4 +54,10 @@ export const TagsStyle = styled.div`
     background: none;
     color: white;
   }
+`;
+export const LoadMore = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 `;

@@ -1,20 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render App component 1`] = `
+exports[`Should render App component 1`] = `
 <DocumentFragment>
   <div
     class="App"
   >
     <div>
-      <label
-        class="sc-gsnTZi gcXMGB"
+      <div
+        class="MuiBox-root css-i9gxme"
       >
-        <label
-          class="form__header form-label"
+        <header
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"
         >
-          Picture Application
-        </label>
-      </label>
+          <div
+            class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-h5 css-98sd7c-MuiTypography-root"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="CameraAltIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="3.2"
+                />
+                <path
+                  d="M9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"
+                />
+              </svg>
+              Picture Application
+            </div>
+          </div>
+        </header>
+      </div>
       <div
         class="sc-dkzDqf dklMiL"
       >
@@ -44,18 +68,17 @@ exports[`render App component 1`] = `
           />
         </div>
       </div>
+      <ul
+        class="MuiImageList-root MuiImageList-standard css-8z7n5c-MuiImageList-root"
+        style="grid-template-columns: repeat(6, 1fr); gap: 15px;"
+      />
       <div
-        class="container-fluid"
-      >
-        <div
-          class="row"
-        />
-      </div>
-      <div
-        style="align-items: center; display: flex; justify-content: center; margin-top: 20px;"
+        class="sc-hKMtZM gECLSV"
       >
         <button
-          class="btn btn-secondary btn-lg"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedInfo MuiButton-sizeLarge MuiButton-outlinedSizeLarge Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedInfo MuiButton-sizeLarge MuiButton-outlinedSizeLarge css-mq3tes-MuiButtonBase-root-MuiButton-root"
+          disabled=""
+          tabindex="-1"
           type="button"
         >
           Load more

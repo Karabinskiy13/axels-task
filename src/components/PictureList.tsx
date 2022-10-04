@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { AppBar, Box, Toolbar, Typography, Button, ImageList, ImageListItem } from '@mui/material';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 import {
   deleteTag,
@@ -18,7 +19,7 @@ import { ModalView, SinglePicture } from './index';
 import store, { RootState } from '../redux/store';
 import { Tag } from '../types';
 
-import { Header, TagsStyle } from '../styled/PictureList';
+import { TagsStyle, LoadMore } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const PictureList = () => {
   };
   const handleDelete = (index: number) => {
     dispatch(deleteTag(index));
+    setActiveTag('');
 
     store.dispatch(
       getPictureByQuery({
@@ -100,9 +102,22 @@ const PictureList = () => {
   };
   return (
     <div>
-      <Header>
-        <Form.Label className="form__header">Picture Application</Form.Label>
-      </Header>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center">
+              <CameraAltIcon />
+              Picture Application
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <TagsStyle>
         <ReactTags
           inputFieldPosition="top"
@@ -113,31 +128,24 @@ const PictureList = () => {
           handleTagClick={handleTagClick}
         />
       </TagsStyle>
-      <Container fluid>
-        <Row>
-          {images &&
-            images.map((picture) => (
-              <Col sm={6} md={4} xl={2} key={picture.id}>
-                <SinglePicture
-                  picture={picture}
-                  showModal={() => openModal(picture.largeImageURL)}
-                />
-              </Col>
-            ))}
-        </Row>
-      </Container>
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '20px'
-        }}>
-        <Button variant="secondary" size="lg" disabled={!canLoadMore} onClick={loadMore}>
+      <ImageList sx={{ width: '100%', height: '100%' }} cols={6} rowHeight="auto" gap={15}>
+        {images &&
+          images.map((picture) => (
+            <ImageListItem key={picture.id}>
+              <SinglePicture picture={picture} showModal={() => openModal(picture.largeImageURL)} />
+            </ImageListItem>
+          ))}
+      </ImageList>
+      <LoadMore>
+        <Button
+          variant="outlined"
+          size="large"
+          disabled={!canLoadMore || !activeTag}
+          onClick={loadMore}
+          color="info">
           Load more
         </Button>
-      </div>
-
+      </LoadMore>
       <ModalView
         show={modalStatus}
         url={modalImageUrl}
