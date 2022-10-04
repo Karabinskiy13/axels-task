@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
+
 import { colors } from './Global';
 
 export const Forma = styled.div`
@@ -60,4 +62,8 @@ export const LoadMore = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+`;
+export const LinkTo = styled(Button)`
+  color: white;
+  cursor: pointer;
 `;

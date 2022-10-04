@@ -2,10 +2,12 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
-import { AppBar, Box, Toolbar, Typography, Button, ImageList, ImageListItem } from '@mui/material';
+import { AppBar, Box, Toolbar, Button, Typography, Grid, Container } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 import {
   deleteTag,
@@ -19,10 +21,11 @@ import { ModalView, SinglePicture } from './index';
 import store, { RootState } from '../redux/store';
 import { Tag } from '../types';
 
-import { TagsStyle, LoadMore } from '../styled/PictureList';
+import { TagsStyle, LoadMore, LinkTo } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { images, lastTags, canLoadMore } = useSelector((state: RootState) => state.pictureReducer);
 
   const [modalStatus, setModalStatus] = useState(false);
@@ -111,10 +114,14 @@ const PictureList = () => {
               sx={{ flexGrow: 1 }}
               display="flex"
               alignItems="center"
-              justifyContent="center">
+              justifyContent="center"
+              marginLeft="64px">
               <CameraAltIcon />
               Picture Application
             </Typography>
+            <LinkTo onClick={() => navigate('/charts')} style={{ color: 'white' }}>
+              <BarChartIcon />
+            </LinkTo>
           </Toolbar>
         </AppBar>
       </Box>
@@ -128,24 +135,32 @@ const PictureList = () => {
           handleTagClick={handleTagClick}
         />
       </TagsStyle>
-      <ImageList sx={{ width: '100%', height: '100%' }} cols={6} rowHeight="auto" gap={15}>
-        {images &&
-          images.map((picture) => (
-            <ImageListItem key={picture.id}>
-              <SinglePicture picture={picture} showModal={() => openModal(picture.largeImageURL)} />
-            </ImageListItem>
-          ))}
-      </ImageList>
-      <LoadMore>
-        <Button
-          variant="outlined"
-          size="large"
-          disabled={!canLoadMore || !activeTag}
-          onClick={loadMore}
-          color="info">
-          Load more
-        </Button>
-      </LoadMore>
+      <Container maxWidth="xl">
+        <Grid container spacing={2}>
+          {images &&
+            images.map((picture) => (
+              <SinglePicture
+                key={picture.id}
+                picture={picture}
+                showModal={() => openModal(picture.largeImageURL)}
+              />
+            ))}
+        </Grid>
+      </Container>
+
+      {activeTag && (
+        <LoadMore>
+          <Button
+            variant="outlined"
+            size="large"
+            disabled={!canLoadMore}
+            onClick={loadMore}
+            color="info">
+            Load more
+          </Button>
+        </LoadMore>
+      )}
+
       <ModalView
         show={modalStatus}
         url={modalImageUrl}
