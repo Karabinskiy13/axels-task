@@ -7,8 +7,6 @@ import { Image } from '../types';
 interface Props {
   picture: Image;
   showModal: (status: boolean) => void;
-  largeImageURL?: string;
-  hits?: string;
 }
 
 const SinglePicture = ({ picture, showModal }: Props) => (

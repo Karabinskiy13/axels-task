@@ -3,13 +3,17 @@
 exports[`<SinglePicture> Should render component 1`] = `
 <DocumentFragment>
   <div
-    class="sc-bczRLJ jIrTGT"
+    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 MuiGrid-grid-lg-3 css-13i4rnv-MuiGrid-root"
   >
-    <img
-      alt="picture__image"
-      class="picture__image"
-      src="/image.png"
-    />
+    <div
+      class="sc-bczRLJ jIrTGT"
+    >
+      <img
+        alt="picture__image"
+        class="picture__image"
+        src="/image.png"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

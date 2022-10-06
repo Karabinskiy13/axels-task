@@ -2,12 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useQueryParams, StringParam, ArrayParam } from 'use-query-params';
-import { AppBar, Box, Toolbar, Button, Typography, Grid, Container } from '@mui/material';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import BarChartIcon from '@mui/icons-material/BarChart';
+import { Box, Button, Grid, Container } from '@mui/material';
 
 import {
   deleteTag,
@@ -20,12 +17,12 @@ import {
 import { ModalView, SinglePicture } from './index';
 import store, { RootState } from '../redux/store';
 import { Tag } from '../types';
+import Header from './Header';
 
-import { TagsStyle, LoadMore, LinkTo } from '../styled/PictureList';
+import { TagsStyle, LoadMore } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { images, lastTags, canLoadMore } = useSelector((state: RootState) => state.pictureReducer);
 
   const [modalStatus, setModalStatus] = useState(false);
@@ -106,24 +103,7 @@ const PictureList = () => {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ flexGrow: 1 }}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              marginLeft="64px">
-              <CameraAltIcon />
-              Picture Application
-            </Typography>
-            <LinkTo onClick={() => navigate('/charts')} style={{ color: 'white' }}>
-              <BarChartIcon />
-            </LinkTo>
-          </Toolbar>
-        </AppBar>
+        <Header />
       </Box>
       <TagsStyle>
         <ReactTags

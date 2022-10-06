@@ -6,20 +6,20 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { QueryParamProvider } from 'use-query-params';
 import store from '../redux/store';
 
-import { Header } from '../components';
+import { PictureList } from '../components';
 
 export default {
-  component: Header
-} as ComponentMeta<typeof Header>;
+  component: PictureList
+} as ComponentMeta<typeof PictureList>;
 
-const Template: ComponentStory<typeof Header> = () => (
+const Template: ComponentStory<typeof PictureList> = () => (
   <Provider store={store}>
     <BrowserRouter>
       <QueryParamProvider adapter={ReactRouter6Adapter}>
-        <Header />;
+        <PictureList />;
       </QueryParamProvider>
     </BrowserRouter>
   </Provider>
 );
 
-export const HeaderComponent = Template.bind({});
+export const PictureListComponent = Template.bind({});
