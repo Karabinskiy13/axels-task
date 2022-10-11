@@ -9,7 +9,7 @@ import store from '../redux/store';
 import { Header } from '../components';
 
 test('Should render Header component', async () => {
-  const { asFragment } = render(
+  render(
     <Provider store={store}>
       <BrowserRouter>
         <QueryParamProvider adapter={ReactRouter6Adapter}>
@@ -20,5 +20,16 @@ test('Should render Header component', async () => {
   );
   await screen.findByText('Picture Application');
   expect(screen.getByText('Picture Application')).toHaveTextContent('Picture Application');
+});
+test('Should create snapshot', async () => {
+  const { asFragment } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <QueryParamProvider adapter={ReactRouter6Adapter}>
+          <Header />
+        </QueryParamProvider>
+      </BrowserRouter>
+    </Provider>
+  );
   expect(asFragment()).toMatchSnapshot();
 });
