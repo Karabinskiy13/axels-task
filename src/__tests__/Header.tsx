@@ -6,14 +6,14 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { QueryParamProvider } from 'use-query-params';
 
 import store from '../redux/store';
-import { PictureList } from '../components';
+import { Header } from '../components';
 
 test('Should render Header component', async () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
         <QueryParamProvider adapter={ReactRouter6Adapter}>
-          <PictureList />
+          <Header />
         </QueryParamProvider>
       </BrowserRouter>
     </Provider>
@@ -26,7 +26,7 @@ test('Should create snapshot', async () => {
     <Provider store={store}>
       <BrowserRouter>
         <QueryParamProvider adapter={ReactRouter6Adapter}>
-          <PictureList />
+          <Header />
         </QueryParamProvider>
       </BrowserRouter>
     </Provider>

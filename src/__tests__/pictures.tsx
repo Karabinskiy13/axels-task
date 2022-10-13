@@ -1,4 +1,3 @@
-import React from 'react';
 import { expect } from '@jest/globals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Image } from '../types';
