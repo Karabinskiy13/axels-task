@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import React from 'react';
 
-import { Columns } from '../styled/SinglePicture';
+import { Columns, Images } from '../styled/SinglePicture';
 import { Image } from '../types';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 const SinglePicture = ({ picture, showModal }: Props) => (
   <Grid item xs={12} md={4} lg={3}>
     <Columns>
-      <img
+      <Images
         className="picture__image"
         alt="picture__image"
         src={picture.previewURL}
