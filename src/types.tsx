@@ -10,3 +10,8 @@ export type Image = {
   tags: string;
   hits?: [{ largeImageURL: string; id: number; previewURL: string; tags: string }];
 };
+
+export type Favorite = {
+  id?: number;
+  previewURL?: string;
+};

@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { pictureService } from '../../services/picture.service';
-import { Image, Tag } from '../../types';
+import { Favorite, Image, Tag } from '../../types';
 
 interface ImagesState {
   images: Image[];
   lastTags: Tag[];
+  favorites: Favorite[];
   page: number;
   canLoadMore: boolean;
   status: null | string;
@@ -38,6 +39,7 @@ export const getPictureByQuery = createAsyncThunk(
 
 const initialState: ImagesState = {
   images: [],
+  favorites: [],
   lastTags: [],
   page: 1,
   canLoadMore: true,
@@ -55,6 +57,13 @@ const pictureSlice = createSlice({
       }
       state.lastTags.unshift(payload);
     },
+    addToFavorites(state, { payload }: { payload: Favorite }) {
+      const index = state.favorites.findIndex(
+        (el: Favorite) => el.previewURL == payload.previewURL
+      );
+      if (index == -1) state.favorites = [...state.favorites, payload];
+    },
+
     deleteTag(state, { payload }: { payload: number }) {
       state.lastTags = state.lastTags.filter((tag, index) => index !== payload);
     },
@@ -89,7 +98,14 @@ const pictureSlice = createSlice({
   }
 });
 
-export const { setTag, deleteTag, setInitialTags, resetImages, increasePage, resetPage } =
-  pictureSlice.actions;
+export const {
+  setTag,
+  deleteTag,
+  setInitialTags,
+  resetImages,
+  increasePage,
+  resetPage,
+  addToFavorites
+} = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;
