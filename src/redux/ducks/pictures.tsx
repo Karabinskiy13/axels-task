@@ -64,6 +64,10 @@ const pictureSlice = createSlice({
       if (index == -1) state.favorites = [...state.favorites, payload];
     },
 
+    removeFromFavorites(state, { payload }) {
+      state.favorites = state.favorites.filter((picture) => picture.previewURL !== payload);
+    },
+
     deleteTag(state, { payload }: { payload: number }) {
       state.lastTags = state.lastTags.filter((tag, index) => index !== payload);
     },
@@ -105,7 +109,8 @@ export const {
   resetImages,
   increasePage,
   resetPage,
-  addToFavorites
+  addToFavorites,
+  removeFromFavorites
 } = pictureSlice.actions;
 const pictureReducer = pictureSlice.reducer;
 export default pictureReducer;

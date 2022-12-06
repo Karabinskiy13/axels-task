@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../redux/store';
+import { addToFavorites } from '../redux/ducks/pictures';
+
 import { Modal, Button } from '@mui/material';
 
 import { StyledModal } from '../styled/ModalView';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { addToFavorites } from '../redux/ducks/pictures';
 
 type Props = {
   show: boolean;

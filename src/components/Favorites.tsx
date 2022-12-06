@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Container, Button, Typography, AppBar, Toolbar } from '@mui/material';
-import { useSelector } from 'react-redux';
+import React from 'react';
+
+import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../redux/store';
 import SinglePicture from './SinglePicture';
-import { useNavigate } from 'react-router';
+import { removeFromFavorites } from '../redux/ducks/pictures';
+
+import { Grid, Container, Button, Typography, AppBar, Toolbar } from '@mui/material';
 
 const Favorites = () => {
   const { favorites } = useSelector((state: RootState) => state.pictureReducer);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -33,7 +37,12 @@ const Favorites = () => {
         <Grid container spacing={2}>
           {favorites &&
             favorites.map((picture) => (
-              <SinglePicture key={picture.id} picture={picture} showModal={() => null} />
+              <SinglePicture
+                key={picture.previewURL}
+                picture={picture}
+                showModal={() => null}
+                remove={() => dispatch(removeFromFavorites(picture.previewURL))}
+              />
             ))}
         </Grid>
       </Container>

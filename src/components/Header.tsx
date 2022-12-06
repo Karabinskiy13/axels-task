@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import BarChartIcon from '@mui/icons-material/BarChart';
