@@ -11,7 +11,4 @@ export type Image = {
   hits?: [{ largeImageURL: string; id: number; previewURL: string; tags: string }];
 };
 
-export type Favorite = {
-  id?: number;
-  previewURL?: string;
-};
+export type FavoriteImage = Partial<Image>;

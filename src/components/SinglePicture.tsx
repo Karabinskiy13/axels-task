@@ -3,10 +3,10 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 
 import { Columns, Images, Cross } from '../styled/SinglePicture';
-import { Favorite, Image } from '../types';
+import { FavoriteImage } from '../types';
 
 interface Props {
-  picture: Image | Favorite;
+  picture: FavoriteImage;
   showModal: (status: boolean) => void;
   remove?: () => void;
 }

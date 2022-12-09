@@ -22,7 +22,6 @@ const ModalView = ({ show, url, hideModal }: Props) => {
   const handle = (url: any) => {
     dispatch(addToFavorites({ previewURL: url }));
   };
-  console.log(favorites);
 
   return (
     <Modal open={show} onClose={() => hideModal()} aria-describedby="modal-modal-picture">

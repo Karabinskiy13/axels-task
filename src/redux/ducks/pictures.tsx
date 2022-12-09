@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { pictureService } from '../../services/picture.service';
-import { Favorite, Image, Tag } from '../../types';
+import { FavoriteImage, Image, Tag } from '../../types';
 
 interface ImagesState {
   images: Image[];
   lastTags: Tag[];
-  favorites: Favorite[];
+  favorites: FavoriteImage[];
   page: number;
   canLoadMore: boolean;
   status: null | string;
@@ -57,9 +57,9 @@ const pictureSlice = createSlice({
       }
       state.lastTags.unshift(payload);
     },
-    addToFavorites(state, { payload }: { payload: Favorite }) {
+    addToFavorites(state, { payload }: { payload: FavoriteImage }) {
       const index = state.favorites.findIndex(
-        (el: Favorite) => el.previewURL == payload.previewURL
+        (el: FavoriteImage) => el.previewURL == payload.previewURL
       );
       if (index == -1) state.favorites = [...state.favorites, payload];
     },
