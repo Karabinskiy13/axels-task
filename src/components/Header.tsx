@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import StarIcon from '@mui/icons-material/Star';
 
 import { LinkTo } from '../styled/PictureList';
 
@@ -26,6 +28,9 @@ export const Header = () => {
           </Typography>
           <LinkTo role="button" onClick={() => navigate('/charts')} style={{ color: 'white' }}>
             <BarChartIcon />
+          </LinkTo>
+          <LinkTo role="button" onClick={() => navigate('/favorites')} style={{ color: 'white' }}>
+            <StarIcon />
           </LinkTo>
         </Toolbar>
       </AppBar>

@@ -23,3 +23,10 @@ export const Images = styled.img`
   max-width: 250px;
   max-height: 160px;
 `;
+
+export const Cross = styled.span`
+  color: red;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+`;

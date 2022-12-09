@@ -5,6 +5,7 @@ import { QueryParamProvider } from 'use-query-params';
 
 import { PictureList, Chart } from './components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Favorites from './components/Favorites';
 
 const App = () => (
   <div className="App">
@@ -12,6 +13,7 @@ const App = () => (
       <Routes>
         <Route path={'/'} element={<PictureList />} />
         <Route path={'/charts'} element={<Chart />} />
+        <Route path={'/favorites'} element={<Favorites />} />
       </Routes>
     </QueryParamProvider>
   </div>
