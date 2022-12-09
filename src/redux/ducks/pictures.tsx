@@ -79,6 +79,7 @@ const pictureSlice = createSlice({
     },
     increasePage(state) {
       state.page += 1;
+      console.log('helo');
     },
     resetPage(state) {
       state.page = 1;
