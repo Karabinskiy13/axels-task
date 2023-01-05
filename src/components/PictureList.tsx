@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -14,6 +15,7 @@ import {
   setInitialTags,
   increasePage
 } from '../redux/ducks/pictures';
+import useAuth from '../hooks';
 import { ModalView, SinglePicture } from './index';
 import store, { RootState } from '../redux/store';
 import { Tag } from '../types';
@@ -23,6 +25,7 @@ import { TagsStyle, LoadMore } from '../styled/PictureList';
 
 const PictureList = () => {
   const dispatch = useDispatch();
+  const { isAuth } = useAuth();
   const { images, lastTags, canLoadMore } = useSelector((state: RootState) => state.pictureReducer);
 
   const [modalStatus, setModalStatus] = useState(false);
@@ -100,7 +103,7 @@ const PictureList = () => {
     store.dispatch(getPictureByQuery({ q: lastTags[index].id, reset: true }));
     setActiveTag(lastTags[index].id);
   };
-  return (
+  return isAuth ? (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <Header />
@@ -150,6 +153,8 @@ const PictureList = () => {
         }}
       />
     </div>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

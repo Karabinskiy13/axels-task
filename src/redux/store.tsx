@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import userReducer from './ducks/auth';
 
 import pictureReducer from './ducks/pictures';
 
-const rootReducer = combineReducers({ pictureReducer });
+const rootReducer = combineReducers({ pictureReducer, userReducer });
 
 const store = configureStore({
   reducer: rootReducer
