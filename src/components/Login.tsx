@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import Form from './FormRegister';
+import FormRegister from './FormRegister';
 
 import { setUser } from '../redux/ducks/auth';
 import { useDispatch } from 'react-redux';
@@ -27,12 +27,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <Form title="sign in" handleClick={handleLogin} />
-      <p>
-        Or <Link to="/register">registration</Link>
-      </p>
+    <div style={{ backgroundColor: 'black' }}>
+      <FormRegister title="sign in" handleClick={handleLogin} />
     </div>
   );
 };
