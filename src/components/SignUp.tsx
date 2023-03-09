@@ -29,6 +29,7 @@ const SignUp = () => {
       })
       .catch(console.error);
   };
+
   return (
     <div>
       <h1>Register</h1>

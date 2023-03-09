@@ -4,7 +4,7 @@ import FormRegister from './FormRegister';
 
 import { setUser } from '../redux/ducks/auth';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();

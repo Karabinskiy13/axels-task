@@ -22,6 +22,8 @@ import { Tag } from '../types';
 import Header from './Header';
 
 import { TagsStyle, LoadMore } from '../styled/PictureList';
+import Slider from './Slider';
+import { pictureService } from '../services/picture.service';
 
 const PictureList = () => {
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ const PictureList = () => {
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const [activeTag, setActiveTag] = useState('');
-
+  const [slider, setSlider] = useState<any>([]);
   const openModal = (url: string) => {
     setModalStatus(true);
     setModalImageUrl(url);
@@ -46,6 +48,17 @@ const PictureList = () => {
     activeTag: StringParam,
     previewURL: StringParam
   });
+
+  useEffect(() => {
+    const fetch = async () => {
+      const dogs = await pictureService.getImagesByQuery('dogs', 1);
+      setSlider(dogs);
+    };
+
+    fetch();
+  }, []);
+
+  console.log(slider);
 
   useEffect(() => {
     setQuery({
@@ -103,7 +116,7 @@ const PictureList = () => {
     store.dispatch(getPictureByQuery({ q: lastTags[index].id, reset: true }));
     setActiveTag(lastTags[index].id);
   };
-  return isAuth ? (
+  return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <Header />
@@ -118,6 +131,7 @@ const PictureList = () => {
           handleTagClick={handleTagClick}
         />
       </TagsStyle>
+      {/* <Slider sliderImages={sliderImages} /> */}
       <Container maxWidth="xl">
         <Grid container spacing={2}>
           {images &&
@@ -153,8 +167,6 @@ const PictureList = () => {
         }}
       />
     </div>
-  ) : (
-    <Navigate to="/login" />
   );
 };
 

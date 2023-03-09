@@ -11,6 +11,7 @@ const FormRegister = ({ title, handleClick }: FormProps) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  console.log(email, password);
 
   return (
     <Body style={{ backgroundColor: 'black' }}>

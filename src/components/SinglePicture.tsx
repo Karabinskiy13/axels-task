@@ -7,7 +7,7 @@ import { FavoriteImage, Image } from '../types';
 
 interface Props {
   picture: Image | FavoriteImage;
-  showModal: (status: boolean) => void;
+  showModal?: (status: boolean) => void;
   remove?: () => void;
 }
 
@@ -18,7 +18,7 @@ const SinglePicture = ({ picture, showModal, remove }: Props) => (
         className="picture__image"
         alt="picture__image"
         src={picture.previewURL}
-        onClick={() => showModal(true)}
+        onClick={() => showModal!(true)}
       />
     </Columns>
     {remove && <Cross onClick={() => remove()}>Remove &times;</Cross>}
