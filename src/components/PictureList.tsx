@@ -24,6 +24,7 @@ import Header from './Header';
 import { TagsStyle, LoadMore } from '../styled/PictureList';
 import Slider from './Slider';
 import { pictureService } from '../services/picture.service';
+import PicturesSkeleton from './PicturesSkeleton';
 
 const PictureList = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const PictureList = () => {
 
   const [modalStatus, setModalStatus] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [activeTag, setActiveTag] = useState('');
   const [slider, setSlider] = useState<any>([]);
   const openModal = (url: string) => {
@@ -48,6 +50,10 @@ const PictureList = () => {
     activeTag: StringParam,
     previewURL: StringParam
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -131,19 +137,26 @@ const PictureList = () => {
           handleTagClick={handleTagClick}
         />
       </TagsStyle>
-      {/* <Slider sliderImages={sliderImages} /> */}
-      <Container maxWidth="xl">
-        <Grid container spacing={2}>
-          {images &&
-            images.map((picture) => (
-              <SinglePicture
-                key={picture.id}
-                picture={picture}
-                showModal={() => openModal(picture.largeImageURL)}
-              />
-            ))}
-        </Grid>
-      </Container>
+      {isLoading ? (
+        <Container maxWidth="xl">
+          <Grid container spacing={2}>
+            <PicturesSkeleton />
+          </Grid>
+        </Container>
+      ) : (
+        <Container maxWidth="xl">
+          <Grid container spacing={2}>
+            {images &&
+              images.map((picture) => (
+                <SinglePicture
+                  key={picture.id}
+                  picture={picture}
+                  showModal={() => openModal(picture.largeImageURL)}
+                />
+              ))}
+          </Grid>
+        </Container>
+      )}
 
       {activeTag && (
         <LoadMore>
